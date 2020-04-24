@@ -1,0 +1,74 @@
+type Query {
+    getAllAdun: [Adun]
+    getAdunProfile(adunID: ID): Adun
+    getMPProfile(mpID: ID): User
+    getUserProfile(userID: ID): User
+}
+
+type Mutation {
+    createUser(user: UserInput): User
+    updateUser(user: UserInput): User
+    createComment(comment: CommentInput): Comment
+    updateComment(commentID: ID, updatePayload: CommentInput): Comment
+}
+
+input CommentInput {
+    title: String
+    type: CommentType
+    content: String
+    dateSubmitted: DateTime
+    author: User
+    upVotes: Int
+    picture: String  #url to the actual picture
+}
+
+input UserInput {
+    name: String
+    age: Int
+    email: String
+    phoneNumber: Int
+    address: String
+    IC: String
+    adun: Adun
+    profileShoutout: String
+}
+
+type User {
+    name: String
+    age: Int
+    ID: ID
+    email: String
+    phoneNumber: Int
+    address: String
+    IC: String
+    adun: Adun
+    commentSubmitted: [Comment]
+    profileShoutout: String
+    isMP: Boolean
+}
+
+type Adun {
+    adunResidents: [User]
+    MP: User
+    comments: [Comment]
+    adunName: String
+    latitude: String  
+    longitude: String
+}
+
+type Comment {
+    title: String
+    type: CommentType
+    content: String
+    dateSubmitted: DateTime
+    author: User
+    upVotes: Int
+    picture: String  #url to the actual picture
+}
+
+enum CommentType {
+    FEEDBACK
+    SUGGESTION
+}
+
+scalar DateTime
